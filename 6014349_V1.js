@@ -15,19 +15,20 @@ function cambiarZoom(valor){
 zoom=parseInt(valor)
 }
 
-function drawPoint(ctx,x,y,size){
-ctx.fillRect(x-size/2,y-size/2,size,size)
+function drawPoint(ctx, x, y, size, color) {
+    ctx.fillStyle = color; // <-- Asegúrate de que esta línea exista
+    ctx.fillRect(x - size/2, y - size/2, size, size);
 }
 
 function drawLine(ctx,x1,y1,x2,y2,size,method){
 
 if(method=="dda"){
 drawDDA(ctx,x1,y1,x2,y2,size)
-}
+    }
 
 if(method=="bresenham"){
 drawBresenham(ctx,x1,y1,x2,y2,size)
-}
+    }
 
 }
 
@@ -46,12 +47,12 @@ let y=y1
 
 for(let i=0;i<=steps;i++){
 
-drawPoint(ctx,Math.round(x),Math.round(y),size)
+drawPoint(ctx, Math.round(x), Math.round(y), size, "#3498db")
 
 x+=xInc
 y+=yInc
 
-}
+    }
 
 }
 
@@ -65,26 +66,22 @@ let sy=(y1<y2)?1:-1
 
 let err=dx-dy
 
-while(true){
+    while (true) {
+        // Optimización: Color naranja para identificar Bresenham
+        drawPoint(ctx, x1, y1, size, "#e67e22");
 
-drawPoint(ctx,x1,y1,size)
+        if (x1 === x2 && y1 === y2) break;
 
-if(x1===x2 && y1===y2) break
-
-let e2=2*err
-
-if(e2>-dy){
-err-=dy
-x1+=sx
-}
-
-if(e2<dx){
-err+=dx
-y1+=sy
-}
-
-}
-
+        const e2 = 2 * err;
+        if (e2 > -dy) {
+            err -= dy;
+            x1 += sx;
+        }
+        if (e2 < dx) {
+            err += dx;
+            y1 += sy;
+        }
+    }
 }
 
 function esTriangulo(x1,y1,x2,y2,x3,y3){
@@ -99,12 +96,12 @@ function obtenerCoordenadas(){
         p1:{x: parseInt(document.getElementById("x1").value || 0, y, parseInt (document.getElementById ("y1").value || 0 ))},
         p2:{x: parseInt(document.getElementById("x2").value || 0, y, parseInt (document.getElementById ("y2").value || 0 ))},
         p3:{x: parseInt(document.getElementById("x3").value || 0, y, parseInt (document.getElementById ("y3").value || 0 ))}
-    }
+}
 
 
 function graficar(){
 
-limpiar()
+    limpiar()
 
 let x1=parseInt(document.getElementById("x1").value)
 let y1=parseInt(document.getElementById("y1").value)
@@ -117,8 +114,8 @@ let y3=parseInt(document.getElementById("y3").value)
 
 if(!esTriangulo(x1,y1,x2,y2,x3,y3)){
 document.getElementById("mensaje").innerText="Los puntos son colineales: NO forman triángulo"
-return
-}
+        return
+    }
 
 document.getElementById("mensaje").innerText="Los puntos forman un triángulo"
 
