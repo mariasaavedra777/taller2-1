@@ -100,45 +100,26 @@ function obtenerCoordenadas(){
 
 
 function graficar(){
+    limpiar();
+    const { p1, p2, p3 } = obtenerCoordenadas();
 
-    limpiar()
-
-let x1=parseInt(document.getElementById("x1").value)
-let y1=parseInt(document.getElementById("y1").value)
-
-let x2=parseInt(document.getElementById("x2").value)
-let y2=parseInt(document.getElementById("y2").value)
-
-let x3=parseInt(document.getElementById("x3").value)
-let y3=parseInt(document.getElementById("y3").value)
-
-if(!esTriangulo(x1,y1,x2,y2,x3,y3)){
-document.getElementById("mensaje").innerText="Los puntos son colineales: NO forman triángulo"
-        return
+    if(!esTriangulo(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y)){
+        document.getElementById("mensaje").innerText = "⚠️ No forman un triángulo";
+        return;
     }
 
-document.getElementById("mensaje").innerText="Los puntos forman un triángulo"
+    // Aplicar zoom y preparar líneas
+    const pts = [
+        { x: p1.x * zoom, y: p1.y * zoom },
+        { x: p2.x * zoom, y: p2.y * zoom },
+        { x: p3.x * zoom, y: p3.y * zoom }
+    ];
 
-x1*=zoom
-y1*=zoom
-x2*=zoom
-y2*=zoom
-x3*=zoom
-y3*=zoom
+    const lineas = [[pts[0], pts[1]], [pts[1], pts[2]], [pts[2], pts[0]]];
 
-drawLine(ctxDDA,x1,y1,x2,y2,size,"dda")
-drawLine(ctxDDA,x2,y2,x3,y3,size,"dda")
-drawLine(ctxDDA,x3,y3,x1,y1,size,"dda")
-
-drawLine(ctxB,x1,y1,x2,y2,size,"bresenham")
-drawLine(ctxB,x2,y2,x3,y3,size,"bresenham")
-drawLine(ctxB,x3,y3,x1,y1,size,"bresenham")
-
+    lineas.forEach(l => {
+        drawDDA(ctxDDA, l[0].x, l[0].y, l[1].x, l[1].y, size);
+        drawBresenham(ctxB, l[0].x, l[0].y, l[1].x, l[1].y, size);
+    });
 }
-
-function limpiar(){
-
-ctxDDA.clearRect(0,0,500,500)
-ctxB.clearRect(0,0,500,500)
-
 }
