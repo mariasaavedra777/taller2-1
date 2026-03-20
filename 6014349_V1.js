@@ -94,6 +94,13 @@ let area=x1*(y2-y3)+x2*(y3-y1)+x3*(y1-y2)
 return area!=0
 
 }
+function obtenerCoordenadas(){
+    return{
+        p1:{x: parseInt(document.getElementById("x1").value || 0, y, parseInt (document.getElementById ("y1").value || 0 ))},
+        p2:{x: parseInt(document.getElementById("x2").value || 0, y, parseInt (document.getElementById ("y2").value || 0 ))},
+        p3:{x: parseInt(document.getElementById("x3").value || 0, y, parseInt (document.getElementById ("y3").value || 0 ))}
+    }
+
 
 function graficar(){
 
