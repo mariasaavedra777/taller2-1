@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Triángulo DDA y Bresenham</title>
+</head>
+
+<body style="font-family:Arial; text-align:center; background:#f5f5f5;">
+
+<h2>Triángulo usando pendiente</h2>
+
+X1 <input id="x1">
+Y1 <input id="y1">
+
+X2 <input id="x2">
+Y2 <input id="y2">
+
+X3 <input id="x3">
+Y3 <input id="y3">
+
+<br><br>
+
+<button onclick="graficar()">Graficar</button>
+<button onclick="limpiar()">Limpiar</button>
+
+<br><br>
+
+Grosor
+<input type="range" min="2" max="15" value="4" onchange="cambiarGrosor(this.value)">
+
+Zoom
+<input type="range" min="1" max="20" value="10" onchange="cambiarZoom(this.value)">
+
+<p id="mensaje"></p>
+
+<h3>DDA</h3>
+<canvas id="canvasDDA" width="500" height="500" style="border:2px solid black;"></canvas>
+
+<h3>Bresenham</h3>
+<canvas id="canvasB" width="500" height="500" style="border:2px solid black;"></canvas>
+
+<script src="6014349_V1.js"></script>
+
+</body>
+</html>
